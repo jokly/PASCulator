@@ -1,0 +1,264 @@
+object mainForm: TmainForm
+  Left = 1079
+  Height = 270
+  Top = 146
+  Width = 200
+  ActiveControl = Edit
+  Caption = 'Calculator v0.0'
+  ClientHeight = 270
+  ClientWidth = 200
+  Constraints.MaxHeight = 270
+  Constraints.MaxWidth = 200
+  Constraints.MinHeight = 270
+  Constraints.MinWidth = 200
+  Font.CharSet = RUSSIAN_CHARSET
+  Font.Height = -16
+  Font.Name = 'Tahoma'
+  Font.Pitch = fpVariable
+  Font.Quality = fqDraft
+  KeyPreview = True
+  OnKeyPress = FormKeyPress
+  ParentBiDiMode = False
+  LCLVersion = '1.4.2.0'
+  object zero: TButton
+    Left = 10
+    Height = 30
+    Top = 229
+    Width = 70
+    Caption = '0'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 0
+  end
+  object one: TButton
+    Left = 10
+    Height = 30
+    Top = 194
+    Width = 31
+    Caption = '1'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 1
+  end
+  object two: TButton
+    Left = 50
+    Height = 30
+    Top = 194
+    Width = 31
+    Caption = '2'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 2
+  end
+  object three: TButton
+    Left = 88
+    Height = 30
+    Top = 194
+    Width = 31
+    Caption = '3'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 3
+  end
+  object Edit: TEdit
+    Left = 10
+    Height = 27
+    Top = 48
+    Width = 181
+    Alignment = taRightJustify
+    ParentBidiMode = False
+    OnChange = EditChange
+    ReadOnly = True
+    TabOrder = 4
+    Text = '0'
+  end
+  object six: TButton
+    Left = 88
+    Height = 30
+    Top = 159
+    Width = 31
+    Caption = '6'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 5
+  end
+  object five: TButton
+    Left = 50
+    Height = 30
+    Top = 159
+    Width = 31
+    Caption = '5'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 6
+  end
+  object four: TButton
+    Left = 10
+    Height = 30
+    Top = 159
+    Width = 31
+    Caption = '4'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 7
+  end
+  object nine: TButton
+    Left = 88
+    Height = 30
+    Top = 124
+    Width = 31
+    Caption = '9'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 8
+  end
+  object eight: TButton
+    Left = 50
+    Height = 30
+    Top = 124
+    Width = 31
+    Caption = '8'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 9
+  end
+  object seven: TButton
+    Left = 10
+    Height = 30
+    Top = 124
+    Width = 31
+    Caption = '7'
+    OnClick = buttonsSymbolsClick
+    TabOrder = 10
+  end
+  object dot: TButton
+    Left = 88
+    Height = 30
+    Top = 229
+    Width = 31
+    Caption = ','
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 11
+  end
+  object ce: TButton
+    Left = 50
+    Height = 30
+    Top = 89
+    Width = 31
+    Caption = 'CE'
+    OnClick = ceClick
+    TabOrder = 12
+  end
+  object plus: TButton
+    Left = 125
+    Height = 30
+    Top = 229
+    Width = 31
+    Caption = '+'
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 13
+  end
+  object plus1: TButton
+    Left = 125
+    Height = 30
+    Top = 124
+    Width = 31
+    Caption = '/'
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 14
+  end
+  object modulo: TButton
+    Left = 160
+    Height = 30
+    Top = 124
+    Width = 31
+    Caption = '%'
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 15
+  end
+  object sqrtB: TButton
+    Left = 160
+    Height = 30
+    Top = 89
+    Width = 31
+    Caption = '√'
+    ParentBidiMode = False
+    OnClick = sqrtBClick
+    TabOrder = 16
+  end
+  object changeSign: TButton
+    Left = 125
+    Height = 30
+    Top = 89
+    Width = 31
+    Caption = '+-'
+    ParentBidiMode = False
+    OnClick = changeSignClick
+    TabOrder = 17
+  end
+  object multiply: TButton
+    Left = 125
+    Height = 30
+    Top = 159
+    Width = 31
+    Caption = '*'
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 18
+  end
+  object multiply1: TButton
+    Left = 160
+    Height = 30
+    Top = 159
+    Width = 31
+    Caption = '1/x'
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 19
+  end
+  object minus: TButton
+    Left = 125
+    Height = 30
+    Top = 194
+    Width = 31
+    Caption = '-'
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 20
+  end
+  object equal: TButton
+    Left = 160
+    Height = 65
+    Top = 194
+    Width = 31
+    Caption = '='
+    ParentBidiMode = False
+    OnClick = dotClick
+    TabOrder = 21
+  end
+  object C: TButton
+    Left = 88
+    Height = 30
+    Top = 89
+    Width = 31
+    Caption = 'C'
+    OnClick = CClick
+    TabOrder = 22
+  end
+  object backspace: TButton
+    Left = 10
+    Height = 30
+    Top = 89
+    Width = 31
+    Caption = '<--'
+    OnClick = backspaceClick
+    TabOrder = 23
+  end
+  object buffer: TEdit
+    Left = 10
+    Height = 19
+    Top = 16
+    Width = 181
+    Alignment = taRightJustify
+    BorderStyle = bsNone
+    Enabled = False
+    ParentBidiMode = False
+    ReadOnly = True
+    TabOrder = 24
+  end
+end
