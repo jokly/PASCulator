@@ -20,7 +20,7 @@ type
     minus: TButton;
     plus: TButton;
     Edit: TEdit;
-    ce: TButton;
+    CE: TButton;
     four: TButton;
     one: TButton;
     plus1: TButton;
@@ -40,26 +40,32 @@ type
     procedure backspaceClick(Sender: TObject);
     procedure buttonsSymbolsClick(Sender: TObject);
     procedure CClick(Sender: TObject);
-    procedure ceClick(Sender: TObject);
+    procedure CEClick(Sender: TObject);
     procedure changeSignClick(Sender: TObject);
     procedure dotClick(Sender: TObject);
     procedure EditChange(Sender: TObject);
+    procedure equalClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
+    procedure actionClick(Sender: TObject);
     procedure sqrtBClick(Sender: TObject);
   private
     procedure changeEdit(ch: Char);
+    procedure consider(op:Char);
+    procedure initialVariables();
   public
     { public declarations }
   end;
 const
   MAX_LENGTH_OF_NUMBER = 16;
 type
-  States = (Initial, Action, Error);
+  States = (Initial, ActionButton, Error);
 var
   mainForm: TmainForm;
   state:States;
   lengthNumber:Integer;
   answer: Extended;
+  operation: Char;
 
 implementation
 
@@ -67,23 +73,68 @@ implementation
 
 { TmainForm }
 
+procedure TmainForm.initialVariables();
+begin
+  buffer.Text:= '';
+  answer:= 0;
+  Edit.Text:= '0';
+end;
+
 procedure TmainForm.changeEdit(ch: Char);
 begin
   Edit.Text:= Edit.Text + ch;
 end;
 
+procedure TmainForm.consider(op:Char);
+begin
+  case op of
+     '+': answer:= answer + StrToFloat(Edit.Text);
+     '-': answer:= answer - StrToFloat(Edit.Text);
+     '*': answer:= answer * StrToFloat(Edit.Text);
+     '/':
+       Try
+          answer:= answer / StrToFloat(Edit.Text);
+       Except on EDivByZero do
+       begin
+          initialVariables();
+          Edit.Text:= 'Ошибка!!!';
+          state:= Error;
+       end;
+       end;
+  end;
+end;
+
+procedure TmainForm.FormCreate(Sender: TObject);
+begin
+  answer:= 0;
+  lengthNumber:= 1;
+  state:= Initial;
+end;
+
 procedure TmainForm.buttonsSymbolsClick(Sender: TObject);
 begin
-  changeEdit(TButton(Sender).Caption[1]);
+  if (state <> Error) then
+     changeEdit(TButton(Sender).Caption[1]);
+end;
+
+procedure TmainForm.FormKeyPress(Sender: TObject; var Key: char);
+var
+  symbols: Set of Char = ['0'..'9'];
+begin
+  if not (Key in symbols) then
+     Key:= #0;
+  changeEdit(Key);
 end;
 
 procedure TmainForm.dotClick(Sender: TObject);
 var
   i:integer;
 begin
-  for i:=1 to Length(Edit.Text) do
-    if (Edit.Text[i] = ',') then exit;
-  Edit.Text:= Edit.Text + ',';
+  if (state <> Error) then begin
+    for i:=1 to Length(Edit.Text) do
+      if (Edit.Text[i] = ',') then exit;
+    Edit.Text:= Edit.Text + ',';
+  end;
 end;
 
 procedure TmainForm.EditChange(Sender: TObject);
@@ -110,42 +161,68 @@ end;
 
 procedure TmainForm.backspaceClick(Sender: TObject);
 begin
-  if (Length(Edit.Text) <> 0) then
+  if (Length(Edit.Text) <> 0) and (state <> Error) then
       Edit.Text:= copy(Edit.Text, 1, Length(Edit.Text)-1);
 end;
 
 procedure TmainForm.CClick(Sender: TObject);
 begin
-  buffer.Text:= '';
-  answer:= 0;
-  Edit.Text:= '0';
+  initialVariables();
+  state:= Initial;
 end;
 
-procedure TmainForm.ceClick(Sender: TObject);
+procedure TmainForm.CEClick(Sender: TObject);
 begin
   Edit.Text:= '0';
+  if (state = Error) then begin
+     buffer.Text:= '';
+     answer:= 0;
+     state:= Initial;
+  end;
 end;
 
-procedure TmainForm.FormKeyPress(Sender: TObject; var Key: char);
-var
-  symbols: Set of Char = ['0'..'9'];
+procedure TmainForm.actionClick(Sender: TObject);
 begin
-  if not (Key in symbols) then
-     Key:= #0;
-  changeEdit(Key);
+  if (state <> Error) then begin
+    if (buffer.Text = '') then
+        answer:= StrToFloat(Edit.Text);
+    if (state = ActionButton) then   //!!! (else)
+        consider(operation);
+    operation:= TButton(Sender).Caption[1];
+    buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' ';
+    Edit.Text:= '0';
+    state:= ActionButton;
+  end;
+end;
+
+procedure TmainForm.equalClick(Sender: TObject);
+begin
+  if (state = ActionButton) then
+      consider(operation);
+  if not (state = Error) then begin
+      Edit.Text:= FloatToStr(answer);
+      buffer.Text:= '';
+      answer:= 0;
+      state:= Initial;
+  end;
 end;
 
 procedure TmainForm.changeSignClick(Sender: TObject);
 begin
-  Edit.Text:= FloatToStr((-1) * StrToFloat(Edit.Text));
+  if not (state = Error) then
+     Edit.Text:= FloatToStr((-1) * StrToFloat(Edit.Text));
 end;
 
 procedure TmainForm.sqrtBClick(Sender: TObject);
 begin
-  Try
-     Edit.Text:= FloatToStr(sqrt(StrToFloat(Edit.Text)));
-  Except on EInvalidOp do
-     buffer.Text:= 'Ошибка';
+  if (state <> Error) then begin
+    Try
+       Edit.Text:= FloatToStr(sqrt(StrToFloat(Edit.Text)));
+    Except on EInvalidOp do begin
+      Edit.Text:= 'Ошибка!!!';
+      state:= Error;
+      end;
+    end;
   end;
 end;
 
