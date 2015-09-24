@@ -1,15 +1,15 @@
 object mainForm: TmainForm
   Left = 1130
-  Height = 270
+  Height = 300
   Top = 123
   Width = 200
   ActiveControl = Edit
   Caption = 'Calculator v0.0'
-  ClientHeight = 270
+  ClientHeight = 300
   ClientWidth = 200
-  Constraints.MaxHeight = 270
+  Constraints.MaxHeight = 300
   Constraints.MaxWidth = 200
-  Constraints.MinHeight = 270
+  Constraints.MinHeight = 300
   Constraints.MinWidth = 200
   Font.CharSet = RUSSIAN_CHARSET
   Font.Height = -16
@@ -24,7 +24,7 @@ object mainForm: TmainForm
   object zero: TButton
     Left = 10
     Height = 30
-    Top = 229
+    Top = 260
     Width = 70
     Caption = '0'
     OnClick = buttonsSymbolsClick
@@ -33,7 +33,7 @@ object mainForm: TmainForm
   object one: TButton
     Left = 10
     Height = 30
-    Top = 194
+    Top = 225
     Width = 31
     Caption = '1'
     OnClick = buttonsSymbolsClick
@@ -42,7 +42,7 @@ object mainForm: TmainForm
   object two: TButton
     Left = 50
     Height = 30
-    Top = 194
+    Top = 225
     Width = 31
     Caption = '2'
     OnClick = buttonsSymbolsClick
@@ -51,7 +51,7 @@ object mainForm: TmainForm
   object three: TButton
     Left = 88
     Height = 30
-    Top = 194
+    Top = 225
     Width = 31
     Caption = '3'
     OnClick = buttonsSymbolsClick
@@ -72,7 +72,7 @@ object mainForm: TmainForm
   object six: TButton
     Left = 88
     Height = 30
-    Top = 159
+    Top = 190
     Width = 31
     Caption = '6'
     OnClick = buttonsSymbolsClick
@@ -81,7 +81,7 @@ object mainForm: TmainForm
   object five: TButton
     Left = 50
     Height = 30
-    Top = 159
+    Top = 190
     Width = 31
     Caption = '5'
     OnClick = buttonsSymbolsClick
@@ -90,7 +90,7 @@ object mainForm: TmainForm
   object four: TButton
     Left = 10
     Height = 30
-    Top = 159
+    Top = 190
     Width = 31
     Caption = '4'
     OnClick = buttonsSymbolsClick
@@ -99,7 +99,7 @@ object mainForm: TmainForm
   object nine: TButton
     Left = 88
     Height = 30
-    Top = 124
+    Top = 155
     Width = 31
     Caption = '9'
     OnClick = buttonsSymbolsClick
@@ -108,7 +108,7 @@ object mainForm: TmainForm
   object eight: TButton
     Left = 50
     Height = 30
-    Top = 124
+    Top = 155
     Width = 31
     Caption = '8'
     OnClick = buttonsSymbolsClick
@@ -117,7 +117,7 @@ object mainForm: TmainForm
   object seven: TButton
     Left = 10
     Height = 30
-    Top = 124
+    Top = 155
     Width = 31
     Caption = '7'
     OnClick = buttonsSymbolsClick
@@ -126,7 +126,7 @@ object mainForm: TmainForm
   object dot: TButton
     Left = 88
     Height = 30
-    Top = 229
+    Top = 260
     Width = 31
     Caption = ','
     ParentBidiMode = False
@@ -136,7 +136,7 @@ object mainForm: TmainForm
   object CE: TButton
     Left = 50
     Height = 30
-    Top = 89
+    Top = 120
     Width = 31
     Caption = 'CE'
     OnClick = CEClick
@@ -145,7 +145,7 @@ object mainForm: TmainForm
   object plus: TButton
     Left = 125
     Height = 30
-    Top = 229
+    Top = 260
     Width = 31
     Caption = '+'
     ParentBidiMode = False
@@ -155,7 +155,7 @@ object mainForm: TmainForm
   object plus1: TButton
     Left = 125
     Height = 30
-    Top = 124
+    Top = 155
     Width = 31
     Caption = '/'
     ParentBidiMode = False
@@ -165,7 +165,7 @@ object mainForm: TmainForm
   object modulo: TButton
     Left = 160
     Height = 30
-    Top = 124
+    Top = 155
     Width = 31
     Caption = '%'
     ParentBidiMode = False
@@ -175,7 +175,7 @@ object mainForm: TmainForm
   object sqrtB: TButton
     Left = 160
     Height = 30
-    Top = 89
+    Top = 120
     Width = 31
     Caption = '√'
     ParentBidiMode = False
@@ -185,7 +185,7 @@ object mainForm: TmainForm
   object changeSign: TButton
     Left = 125
     Height = 30
-    Top = 89
+    Top = 120
     Width = 31
     Caption = '+-'
     ParentBidiMode = False
@@ -195,27 +195,27 @@ object mainForm: TmainForm
   object multiply: TButton
     Left = 125
     Height = 30
-    Top = 159
+    Top = 190
     Width = 31
     Caption = '*'
     ParentBidiMode = False
     OnClick = actionClick
     TabOrder = 18
   end
-  object multiply1: TButton
+  object opposite: TButton
     Left = 160
     Height = 30
-    Top = 159
+    Top = 190
     Width = 31
     Caption = '1/x'
     ParentBidiMode = False
-    OnClick = dotClick
+    OnClick = oppositeClick
     TabOrder = 19
   end
   object minus: TButton
     Left = 125
     Height = 30
-    Top = 194
+    Top = 225
     Width = 31
     Caption = '-'
     ParentBidiMode = False
@@ -225,7 +225,7 @@ object mainForm: TmainForm
   object equal: TButton
     Left = 160
     Height = 65
-    Top = 194
+    Top = 225
     Width = 31
     Caption = '='
     ParentBidiMode = False
@@ -235,7 +235,7 @@ object mainForm: TmainForm
   object C: TButton
     Left = 88
     Height = 30
-    Top = 89
+    Top = 120
     Width = 31
     Caption = 'C'
     OnClick = CClick
@@ -244,7 +244,7 @@ object mainForm: TmainForm
   object backspace: TButton
     Left = 10
     Height = 30
-    Top = 89
+    Top = 120
     Width = 31
     Caption = '<--'
     OnClick = backspaceClick
@@ -261,5 +261,47 @@ object mainForm: TmainForm
     ParentBidiMode = False
     ReadOnly = True
     TabOrder = 24
+  end
+  object MR: TButton
+    Left = 50
+    Height = 30
+    Top = 85
+    Width = 31
+    Caption = 'MR'
+    TabOrder = 25
+  end
+  object Mminus: TButton
+    Left = 160
+    Height = 30
+    Top = 85
+    Width = 31
+    Caption = 'M-'
+    ParentBidiMode = False
+    TabOrder = 26
+  end
+  object Mplus: TButton
+    Left = 125
+    Height = 30
+    Top = 85
+    Width = 31
+    Caption = 'M+'
+    ParentBidiMode = False
+    TabOrder = 27
+  end
+  object MS: TButton
+    Left = 88
+    Height = 30
+    Top = 85
+    Width = 31
+    Caption = 'MS'
+    TabOrder = 28
+  end
+  object MC: TButton
+    Left = 10
+    Height = 30
+    Top = 85
+    Width = 31
+    Caption = 'MC'
+    TabOrder = 29
   end
 end

@@ -12,11 +12,15 @@ type
   { TmainForm }
 
   TmainForm = class(TForm)
+    MC: TButton;
     C: TButton;
     backspace: TButton;
     buffer: TEdit;
+    MS: TButton;
+    MR: TButton;
+    Mplus: TButton;
     equal: TButton;
-    multiply1: TButton;
+    opposite: TButton;
     minus: TButton;
     plus: TButton;
     Edit: TEdit;
@@ -34,6 +38,7 @@ type
     eight: TButton;
     seven: TButton;
     dot: TButton;
+    Mminus: TButton;
     two: TButton;
     three: TButton;
     zero: TButton;
@@ -48,6 +53,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure actionClick(Sender: TObject);
+    procedure oppositeClick(Sender: TObject);
     procedure sqrtBClick(Sender: TObject);
   private
     procedure changeEdit(ch: Char);
@@ -58,6 +64,7 @@ type
   end;
 const
   MAX_LENGTH_OF_NUMBER = 16;
+  ERROR_MESSAGE = 'Ошибка';
 type
   States = (Initial, ActionButton, Error);
 var
@@ -97,7 +104,7 @@ begin
        Except on EDivByZero do
        begin
           initialVariables();
-          Edit.Text:= 'Ошибка!!!';
+          Edit.Text:= ERROR_MESSAGE;
           state:= Error;
        end;
        end;
@@ -219,9 +226,23 @@ begin
     Try
        Edit.Text:= FloatToStr(sqrt(StrToFloat(Edit.Text)));
     Except on EInvalidOp do begin
-      Edit.Text:= 'Ошибка!!!';
+      Edit.Text:= ERROR_MESSAGE;
       state:= Error;
       end;
+    end;
+  end;
+end;
+
+procedure TmainForm.oppositeClick(Sender: TObject);
+begin
+  if (state <> Error) then begin
+    Try
+       Edit.Text:= FloatToStr(1 / StrToFloat(Edit.Text));
+    Except on EDivByZero do
+    begin
+      Edit.Text:= ERROR_MESSAGE;
+      state:= Error;
+    end;
     end;
   end;
 end;
