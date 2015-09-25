@@ -1,7 +1,7 @@
 object mainForm: TmainForm
-  Left = 1130
+  Left = 1060
   Height = 300
-  Top = 123
+  Top = 114
   Width = 200
   ActiveControl = Edit
   Caption = 'Calculator v0.0'
