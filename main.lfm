@@ -1,7 +1,7 @@
 object mainForm: TmainForm
-  Left = 1060
+  Left = 1133
   Height = 300
-  Top = 114
+  Top = 123
   Width = 200
   ActiveControl = Edit
   Caption = 'Calculator v0.0'
@@ -169,7 +169,7 @@ object mainForm: TmainForm
     Width = 31
     Caption = '%'
     ParentBidiMode = False
-    OnClick = dotClick
+    OnClick = moduloClick
     TabOrder = 15
   end
   object sqrtB: TButton

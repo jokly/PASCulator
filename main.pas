@@ -53,12 +53,14 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure actionClick(Sender: TObject);
+    procedure moduloClick(Sender: TObject);
     procedure oppositeClick(Sender: TObject);
     procedure sqrtBClick(Sender: TObject);
   private
     procedure changeEdit(ch: Char);
     procedure consider(op:Char);
     procedure initialVariables();
+    procedure applyFunction(f: Char; old:String);
   public
     { public declarations }
   end;
@@ -175,20 +177,42 @@ end;
 procedure TmainForm.actionClick(Sender: TObject);
 begin
   if (state <> Error) then begin
+    operation:= TButton(Sender).Caption[1];
     if (buffer.Text = '') then
         answer:= StrToFloat(Edit.Text);
-    if (state = ActionButton) then   //!!! (else)
+    if (buffer.Text = '') or ((buffer.Text <> '') and (buffer.Text[Length(buffer.Text) - 1] in ['+','-','*','/'])) then
+       buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' '
+    else
+       buffer.Text:= buffer.Text + ' ' + operation + ' ';
+    if (state = ActionButton) then
         consider(operation);
-    operation:= TButton(Sender).Caption[1];
-    buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' ';
     state:= ActionButton;
     changeValue:= true;
   end;
 end;
 
+procedure TmainForm.applyFunction(f: Char; old:String);
+begin
+  if (buffer.Text = '') then
+     answer:= StrToFloat(Edit.Text)
+  else begin
+    consider(buffer.Text[Length(buffer.Text) - 1]);
+    state:= Initial;
+    changeValue:= true;
+  end;
+  case f of
+     's': buffer.Text:= buffer.Text + '√(' + old + ')';
+     '%': buffer.Text:= buffer.Text + old;
+     '/': buffer.Text:= buffer.Text + '1/(' + old + ')';
+  end;
+end;
+
 procedure TmainForm.sqrtBClick(Sender: TObject);
+var
+  old:String;
 begin
   if (state <> Error) then begin
+    old:= Edit.Text;
     Try
        Edit.Text:= FloatToStr(sqrt(StrToFloat(Edit.Text)));
     Except on EInvalidOp do begin
@@ -196,12 +220,24 @@ begin
       state:= Error;
       end;
     end;
+    applyFunction('s', old);
+  end;
+end;
+
+procedure TmainForm.moduloClick(Sender: TObject);
+begin
+  if (state <> Error) then begin
+    Edit.Text:= FloatToStr(answer / 100 * StrToFloat(Edit.Text));
+    applyFunction('%', Edit.Text);
   end;
 end;
 
 procedure TmainForm.oppositeClick(Sender: TObject);
+var
+  old:String;
 begin
   if (state <> Error) then begin
+    old:= Edit.Text;
     Try
        Edit.Text:= FloatToStr(1 / StrToFloat(Edit.Text));
     Except on EDivByZero do
@@ -210,6 +246,7 @@ begin
       state:= Error;
     end;
     end;
+    applyFunction('/', old);
   end;
 end;
 { end }
