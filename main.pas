@@ -61,6 +61,7 @@ type
     procedure consider(op:Char);
     procedure initialVariables();
     procedure applyFunction(f: Char; old:String);
+    function isDotExist(): Boolean;
   public
     { public declarations }
   end;
@@ -68,14 +69,14 @@ const
   MAX_LENGTH_OF_NUMBER = 16;
   ERROR_MESSAGE = 'Ошибка';
 type
-  States = (Initial, ActionButton, Error);
+  States = (Initial, ActionButton, FunctionButton, Error);
 var
   mainForm: TmainForm;
   state:States;
   lengthNumber:Integer;
   answer: Extended;
   operation: Char;
-  changeValue:boolean;
+  changeValue: Boolean;
 
 implementation
 
@@ -88,6 +89,7 @@ begin
   lengthNumber:= 1;
   state:= Initial;
   changeValue:= false;
+
 end;
 
 procedure TmainForm.initialVariables();
@@ -123,13 +125,19 @@ begin
   changeEdit(Key);
 end;
 
-procedure TmainForm.dotClick(Sender: TObject);
+function TmainForm.isDotExist(): Boolean;
 var
-  i:integer;
+  i: integer;
+begin
+  isDotExist:= false;
+  for i:=1 to Length(Edit.Text) do
+      if (Edit.Text[i] = ',') then isDotExist:= true;
+end;
+
+procedure TmainForm.dotClick(Sender: TObject);
 begin
   if (state <> Error) then begin
-    for i:=1 to Length(Edit.Text) do
-      if (Edit.Text[i] = ',') then exit;
+    if (isDotExist) then exit;
     Edit.Text:= Edit.Text + ',';
   end;
 end;
@@ -138,7 +146,7 @@ procedure TmainForm.EditChange(Sender: TObject);
 var
   i:integer;
 begin
-  if (Length(Edit.Text) > 1) and (Edit.Text[1] = '0') then
+  if (Length(Edit.Text) > 1) and (Edit.Text[1] = '0') and not(isDotExist) then
         Edit.Text:= copy(Edit.Text, 2, Length(Edit.Text))
   else if (Edit.Text = '') or (Edit.Text = '-') then
      Edit.Text:= '0';
@@ -158,15 +166,14 @@ end;
 procedure TmainForm.consider(op:Char);
 begin
   case op of
-     '+': answer:= answer + StrToFloat(Edit.Text);
-     '-': answer:= answer - StrToFloat(Edit.Text);
-     '*': answer:= answer * StrToFloat(Edit.Text);
+     '+': answer+= StrToFloat(Edit.Text);
+     '-': answer-= StrToFloat(Edit.Text);
+     '*': answer*= StrToFloat(Edit.Text);
      '/':
        Try
-          answer:= answer / StrToFloat(Edit.Text);
+          answer/= StrToFloat(Edit.Text);
        Except on EDivByZero do
        begin
-          initialVariables();
           Edit.Text:= ERROR_MESSAGE;
           state:= Error;
        end;
@@ -175,17 +182,27 @@ begin
 end;
 
 procedure TmainForm.actionClick(Sender: TObject);
+var
+  oldOp: Char;
 begin
   if (state <> Error) then begin
+    oldOp:= operation;
     operation:= TButton(Sender).Caption[1];
-    if (buffer.Text = '') then
-        answer:= StrToFloat(Edit.Text);
-    if (buffer.Text = '') or ((buffer.Text <> '') and (buffer.Text[Length(buffer.Text) - 1] in ['+','-','*','/'])) then
-       buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' '
-    else
-       buffer.Text:= buffer.Text + ' ' + operation + ' ';
-    if (state = ActionButton) then
-        consider(operation);
+    if (buffer.Text = '') then begin
+      answer:= StrToFloat(Edit.Text);
+      buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' ';
+    end
+    else if (state = ActionButton) and (changeValue) then begin
+      buffer.Text:= copy(buffer.Text, 1, Length(buffer.Text) - 2);
+      buffer.Text:= buffer.Text + operation + ' ';
+    end
+    else if (state = ActionButton) and not(changeValue) then begin
+      buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' ';
+      consider(oldOp);
+    end
+    else if (state = FunctionButton) then
+      buffer.Text:= buffer.Text + ' ' + operation + ' ';
+    Edit.Text:= FloatToStr(answer);
     state:= ActionButton;
     changeValue:= true;
   end;
@@ -197,7 +214,7 @@ begin
      answer:= StrToFloat(Edit.Text)
   else begin
     consider(buffer.Text[Length(buffer.Text) - 1]);
-    state:= Initial;
+    state:= FunctionButton;
     changeValue:= true;
   end;
   case f of
