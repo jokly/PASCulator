@@ -27,7 +27,7 @@ type
     CE: TButton;
     four: TButton;
     one: TButton;
-    plus1: TButton;
+    divide: TButton;
     modulo: TButton;
     changeSign: TButton;
     multiply: TButton;
@@ -135,11 +135,19 @@ end;
 
 procedure TmainForm.FormKeyPress(Sender: TObject; var Key: char);
 var
-  symbols: Set of Char = ['0'..'9'];
+  symbols: Set of Char = ['0'..'9', '+', '-', '*', '/', '=', #08, #13];
 begin
   if not (Key in symbols) then
      Key:= #0;
-  changeEdit(Key);
+  case Key of
+     '+': plus.Click();
+     '-': minus.Click();
+     '*': multiply.Click();
+     '/': divide.Click();
+     '=', #13: equal.Click();
+     #08: backspace.Click();
+     else changeEdit(Key);
+  end;
 end;
 
 function TmainForm.isDotExist(): Boolean;

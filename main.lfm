@@ -152,7 +152,7 @@ object mainForm: TmainForm
     OnClick = actionClick
     TabOrder = 13
   end
-  object plus1: TButton
+  object divide: TButton
     Left = 125
     Height = 30
     Top = 155
