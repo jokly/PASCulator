@@ -1,7 +1,7 @@
 object mainForm: TmainForm
-  Left = 1132
+  Left = 1150
   Height = 300
-  Top = 109
+  Top = 110
   Width = 200
   ActiveControl = Edit
   Caption = 'Calculator v0.0'
@@ -268,6 +268,7 @@ object mainForm: TmainForm
     Top = 85
     Width = 31
     Caption = 'MR'
+    OnClick = MRClick
     TabOrder = 25
   end
   object Mminus: TButton
@@ -277,6 +278,7 @@ object mainForm: TmainForm
     Width = 31
     Caption = 'M-'
     ParentBidiMode = False
+    OnClick = MactionClick
     TabOrder = 26
   end
   object Mplus: TButton
@@ -286,6 +288,7 @@ object mainForm: TmainForm
     Width = 31
     Caption = 'M+'
     ParentBidiMode = False
+    OnClick = MactionClick
     TabOrder = 27
   end
   object MS: TButton
@@ -294,6 +297,7 @@ object mainForm: TmainForm
     Top = 85
     Width = 31
     Caption = 'MS'
+    OnClick = MSClick
     TabOrder = 28
   end
   object MC: TButton
@@ -302,6 +306,7 @@ object mainForm: TmainForm
     Top = 85
     Width = 31
     Caption = 'MC'
+    OnClick = MCClick
     TabOrder = 29
   end
 end

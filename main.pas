@@ -53,14 +53,18 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure actionClick(Sender: TObject);
+    procedure MCClick(Sender: TObject);
     procedure moduloClick(Sender: TObject);
+    procedure MactionClick(Sender: TObject);
+    procedure MRClick(Sender: TObject);
+    procedure MSClick(Sender: TObject);
     procedure oppositeClick(Sender: TObject);
     procedure sqrtBClick(Sender: TObject);
   private
     procedure changeEdit(ch: Char);
-    procedure consider(op:Char);
+    procedure consider(op: Char; var ans: Extended);
     procedure initialVariables();
-    procedure applyFunction(f: Char; old:String);
+    procedure applyFunction(f: Char; old: String);
     function isDotExist(): Boolean;
   public
     { public declarations }
@@ -73,8 +77,8 @@ type
 var
   mainForm: TmainForm;
   state:States;
-  lengthNumber:Integer;
-  answer: Extended;
+  lengthNumber, startFunc:Integer;
+  answer, memory, lastNumber, equalAns, lastFuncAns: Extended;
   operation: Char;
   changeValue: Boolean;
 
@@ -85,11 +89,13 @@ implementation
 { Иницилизация begin}
 procedure TmainForm.FormCreate(Sender: TObject);
 begin
+  buffer.Text:= '';
   answer:= 0;
+  Edit.Text:= '0';
   lengthNumber:= 1;
   state:= Initial;
   changeValue:= false;
-
+  memory:= 0;
 end;
 
 procedure TmainForm.initialVariables();
@@ -97,6 +103,9 @@ begin
   buffer.Text:= '';
   answer:= 0;
   Edit.Text:= '0';
+  lengthNumber:= 1;
+  state:= Initial;
+  changeValue:= false;
 end;
 { end }
 { Ввод begin }
@@ -107,6 +116,14 @@ begin
      changeValue:= false;
   end;
   Edit.Text:= Edit.Text + ch;
+  if (state = FunctionButton) then begin
+     if (buffer.Text = '') then
+        state:= Initial
+     else
+        state:= ActionButton;
+     buffer.Text:= copy(buffer.Text, 1, startFunc);
+     answer-= lastFuncAns;
+  end;
 end;
 
 procedure TmainForm.buttonsSymbolsClick(Sender: TObject);
@@ -163,15 +180,15 @@ begin
 end;
 { end }
 { Вычислительные операции begin }
-procedure TmainForm.consider(op:Char);
+procedure TmainForm.consider(op:Char; var ans: Extended);
 begin
   case op of
-     '+': answer+= StrToFloat(Edit.Text);
-     '-': answer-= StrToFloat(Edit.Text);
-     '*': answer*= StrToFloat(Edit.Text);
+     '+': ans+= StrToFloat(Edit.Text);
+     '-': ans-= StrToFloat(Edit.Text);
+     '*': ans*= StrToFloat(Edit.Text);
      '/':
        Try
-          answer/= StrToFloat(Edit.Text);
+          ans/= StrToFloat(Edit.Text);
        Except on EDivByZero do
        begin
           Edit.Text:= ERROR_MESSAGE;
@@ -198,7 +215,7 @@ begin
     end
     else if (state = ActionButton) and not(changeValue) then begin
       buffer.Text:= buffer.Text + Edit.Text + ' ' + operation + ' ';
-      consider(oldOp);
+      consider(oldOp, answer);
     end
     else if (state = FunctionButton) then
       buffer.Text:= buffer.Text + ' ' + operation + ' ';
@@ -209,19 +226,41 @@ begin
 end;
 
 procedure TmainForm.applyFunction(f: Char; old:String);
+var
+  subStr: String;
 begin
-  if (buffer.Text = '') then
-     answer:= StrToFloat(Edit.Text)
+  if (state <> FunctionButton) then begin
+    startFunc:= Length(buffer.Text);
+    if (buffer.Text = '') then
+      answer:= StrToFloat(Edit.Text)
+    else
+      consider(buffer.Text[Length(buffer.Text) - 1], answer);
+    case f of
+       's': buffer.Text:= buffer.Text + '√(' + old + ')';
+       '%': buffer.Text:= buffer.Text + old;
+       '/': buffer.Text:= buffer.Text + '1/(' + old + ')';
+    end;
+  end
   else begin
-    consider(buffer.Text[Length(buffer.Text) - 1]);
-    state:= FunctionButton;
-    changeValue:= true;
+    subStr:= '';
+    case f of
+      's': subStr:= '√(';
+      '%': buffer.Text:= copy(buffer.Text, 1, startFunc) + old;
+      '/': subStr:= '1/(';
+    end;
+    if (subStr <> '') then begin
+      subStr:= subStr + copy(buffer.Text, startFunc, Length(buffer.Text)) + ')';
+      buffer.Text:= copy(buffer.Text, 1, startFunc) + subStr;
+    end;
+    if (buffer.Text = '') or (startFunc = 0) then
+      answer:= StrToFloat(Edit.Text)
+    else begin
+      if (f <> '%') then answer -= lastFuncAns;
+      consider(buffer.Text[startFunc - 1], answer);
+    end;
   end;
-  case f of
-     's': buffer.Text:= buffer.Text + '√(' + old + ')';
-     '%': buffer.Text:= buffer.Text + old;
-     '/': buffer.Text:= buffer.Text + '1/(' + old + ')';
-  end;
+  state:= FunctionButton;
+  changeValue:= true;
 end;
 
 procedure TmainForm.sqrtBClick(Sender: TObject);
@@ -231,19 +270,22 @@ begin
   if (state <> Error) then begin
     old:= Edit.Text;
     Try
+       lastFuncAns:= StrToFloat(Edit.Text);
        Edit.Text:= FloatToStr(sqrt(StrToFloat(Edit.Text)));
+       applyFunction('s', old);
     Except on EInvalidOp do begin
       Edit.Text:= ERROR_MESSAGE;
       state:= Error;
       end;
     end;
-    applyFunction('s', old);
   end;
 end;
 
 procedure TmainForm.moduloClick(Sender: TObject);
 begin
   if (state <> Error) then begin
+    lastFuncAns:= StrToFloat(Edit.Text);
+    if (state = FunctionButton) then answer-= lastFuncAns;
     Edit.Text:= FloatToStr(answer / 100 * StrToFloat(Edit.Text));
     applyFunction('%', Edit.Text);
   end;
@@ -256,14 +298,15 @@ begin
   if (state <> Error) then begin
     old:= Edit.Text;
     Try
+       lastFuncAns:= StrToFloat(Edit.Text);
        Edit.Text:= FloatToStr(1 / StrToFloat(Edit.Text));
+       applyFunction('/', old);
     Except on EDivByZero do
     begin
       Edit.Text:= ERROR_MESSAGE;
       state:= Error;
     end;
     end;
-    applyFunction('/', old);
   end;
 end;
 { end }
@@ -292,25 +335,67 @@ end;
 
 procedure TmainForm.changeSignClick(Sender: TObject);
 begin
-  if not (state = Error) then
+  if (state <> Error) then
      Edit.Text:= FloatToStr((-1) * StrToFloat(Edit.Text));
 end;
 
 procedure TmainForm.equalClick(Sender: TObject);
 begin
-  if (state = ActionButton) then
-      consider(operation);
-  if not (state = Error) then begin
-      Edit.Text:= FloatToStr(answer);
-      buffer.Text:= '';
-      answer:= 0;
-      state:= Initial;
+  if (state = ActionButton) then begin
+     lastNumber:= StrToFloat(Edit.Text);
+     consider(operation, answer);
+     equalAns:= answer;
+  end;
+  if (state = Initial) and (changeValue = true) then begin
+     Edit.Text:= FloatToStr(lastNumber);
+     consider(operation, equalAns);
+     Edit.Text:= FloatToStr(equalAns);
+  end
+  else if (state <> Error) then begin
+    Edit.Text:= FloatToStr(answer);
+    buffer.Text:= '';
+    answer:= 0;
+    state:= Initial;
+    changeValue:= true;
   end;
 end;
 { end }
 
-{ Буфер begin }
-// TODO
+{ Память begin }
+procedure TmainForm.MCClick(Sender: TObject);
+begin
+  memory:= 0;
+end;
+
+procedure TmainForm.MRClick(Sender: TObject);
+begin
+  if (state <> Error) then begin
+      Edit.Text:= FloatToStr(memory);
+      changeValue:= true;
+  end;
+end;
+
+procedure TmainForm.MSClick(Sender: TObject);
+begin
+  if (state <> Error) then begin
+      memory:= StrToFloat(Edit.Text);
+      changeValue:= true;
+  end;
+end;
+
+procedure TmainForm.MactionClick(Sender: TObject);
+var
+  operationM: Char;
+begin
+  if (state <> Error) then begin
+    operationM:= TButton(Sender).Caption[2];
+    case operationM of
+       '+': memory+= StrToFloat(Edit.Text);
+       '-': memory-= StrToFloat(Edit.Text);
+    end;
+    changeValue:= true;
+  end;
+end;
 { end }
 
 end.
