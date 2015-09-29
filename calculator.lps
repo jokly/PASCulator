@@ -4,11 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="8">
+    <Units Count="11">
       <Unit0>
         <Filename Value="calculator.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="34"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="21"/>
+        <UsageCount Value="36"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -16,96 +18,129 @@
         <ComponentName Value="mainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="218"/>
-        <CursorPos X="38" Y="234"/>
-        <UsageCount Value="34"/>
+        <CursorPos X="87" Y="8"/>
+        <UsageCount Value="36"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
+        <Filename Value="about.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="aboutForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="32"/>
+        <CursorPos X="17" Y="50"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
         <Filename Value="C:\Programs\Lazarus\lcl\include\control.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="3267"/>
         <CursorPos Y="3278"/>
         <UsageCount Value="10"/>
-      </Unit2>
-      <Unit3>
+      </Unit3>
+      <Unit4>
         <Filename Value="C:\Programs\Lazarus\lcl\include\wincontrol.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="8130"/>
         <CursorPos Y="8141"/>
         <UsageCount Value="10"/>
-      </Unit3>
-      <Unit4>
+      </Unit4>
+      <Unit5>
         <Filename Value="C:\Programs\Lazarus\lcl\interfaces\win32\win32wsstdctrls.pp"/>
         <UnitName Value="Win32WSStdCtrls"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1230"/>
         <CursorPos Y="1247"/>
         <UsageCount Value="10"/>
-      </Unit4>
-      <Unit5>
+      </Unit5>
+      <Unit6>
         <Filename Value="C:\Programs\Lazarus\lcl\interfaces\win32\win32proc.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1061"/>
         <CursorPos Y="1072"/>
         <UsageCount Value="10"/>
-      </Unit5>
-      <Unit6>
+      </Unit6>
+      <Unit7>
         <Filename Value="C:\Programs\Lazarus\lcl\lclproc.pas"/>
         <UnitName Value="LCLProc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2939"/>
         <CursorPos Y="2952"/>
         <UsageCount Value="10"/>
-      </Unit6>
-      <Unit7>
+      </Unit7>
+      <Unit8>
         <Filename Value="C:\Programs\Lazarus\components\lazutils\lazutf8.pas"/>
         <UnitName Value="LazUTF8"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="3310"/>
         <CursorPos Y="3322"/>
         <UsageCount Value="10"/>
-      </Unit7>
+      </Unit8>
+      <Unit9>
+        <Filename Value="main.lfm"/>
+        <ComponentName Value="mainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\Programs\Lazarus\components\lazutils\utf8process.pp"/>
+        <UnitName Value="UTF8Process"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="235"/>
+        <CursorPos Y="247"/>
+        <UsageCount Value="10"/>
+      </Unit10>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="10" HistoryIndex="9">
       <Position1>
-        <Filename Value="main.pas"/>
-        <Caret Line="184" TopLine="175"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="7" Column="46"/>
       </Position1>
       <Position2>
-        <Filename Value="main.pas"/>
-        <Caret Line="185" TopLine="175"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="15" Column="17" TopLine="9"/>
       </Position2>
       <Position3>
-        <Filename Value="main.pas"/>
-        <Caret Line="199" TopLine="188"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="14" Column="28" TopLine="8"/>
       </Position3>
       <Position4>
-        <Filename Value="main.pas"/>
-        <Caret Line="298" Column="7" TopLine="245"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="15" Column="29" TopLine="8"/>
       </Position4>
       <Position5>
-        <Filename Value="main.pas"/>
-        <Caret Line="365" Column="7" TopLine="344"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="17" Column="29" TopLine="8"/>
       </Position5>
       <Position6>
-        <Filename Value="main.pas"/>
-        <Caret Line="112" Column="18" TopLine="95"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="16" Column="29" TopLine="8"/>
       </Position6>
       <Position7>
-        <Filename Value="main.pas"/>
-        <Caret Line="66" Column="53" TopLine="40"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="18" Column="44" TopLine="8"/>
       </Position7>
       <Position8>
-        <Filename Value="main.pas"/>
-        <Caret Line="235" Column="38" TopLine="219"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="44" Column="21" TopLine="27"/>
       </Position8>
       <Position9>
-        <Filename Value="main.pas"/>
-        <Caret Line="234" Column="38" TopLine="218"/>
+        <Filename Value="about.pas"/>
+        <Caret Line="43" Column="66" TopLine="24"/>
       </Position9>
+      <Position10>
+        <Filename Value="about.pas"/>
+        <Caret Line="48" Column="42" TopLine="27"/>
+      </Position10>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

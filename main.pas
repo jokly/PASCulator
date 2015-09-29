@@ -5,17 +5,19 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, about, Menus;
 
 type
 
   { TmainForm }
 
   TmainForm = class(TForm)
+    MainMenu: TMainMenu;
     MC: TButton;
     C: TButton;
     backspace: TButton;
     buffer: TEdit;
+    aboutItem: TMenuItem;
     MS: TButton;
     MR: TButton;
     Mplus: TButton;
@@ -42,6 +44,7 @@ type
     two: TButton;
     three: TButton;
     zero: TButton;
+    procedure aboutItemClick(Sender: TObject);
     procedure backspaceClick(Sender: TObject);
     procedure buttonsSymbolsClick(Sender: TObject);
     procedure CClick(Sender: TObject);
@@ -398,6 +401,11 @@ begin
   end;
 end;
 { end }
-
+{ Меню begin}
+procedure TmainForm.aboutItemClick(Sender: TObject);
+begin
+  about.aboutForm.Show();
+end;
+{ end }
 end.
 
