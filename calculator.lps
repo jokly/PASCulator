@@ -8,7 +8,7 @@
       <Unit0>
         <Filename Value="calculator.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="34"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -17,9 +17,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="128"/>
-        <CursorPos X="7" Y="145"/>
-        <UsageCount Value="32"/>
+        <TopLine Value="218"/>
+        <CursorPos X="38" Y="234"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -69,7 +69,7 @@
         <UsageCount Value="10"/>
       </Unit7>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="main.pas"/>
         <Caret Line="184" TopLine="175"/>
@@ -82,6 +82,30 @@
         <Filename Value="main.pas"/>
         <Caret Line="199" TopLine="188"/>
       </Position3>
+      <Position4>
+        <Filename Value="main.pas"/>
+        <Caret Line="298" Column="7" TopLine="245"/>
+      </Position4>
+      <Position5>
+        <Filename Value="main.pas"/>
+        <Caret Line="365" Column="7" TopLine="344"/>
+      </Position5>
+      <Position6>
+        <Filename Value="main.pas"/>
+        <Caret Line="112" Column="18" TopLine="95"/>
+      </Position6>
+      <Position7>
+        <Filename Value="main.pas"/>
+        <Caret Line="66" Column="53" TopLine="40"/>
+      </Position7>
+      <Position8>
+        <Filename Value="main.pas"/>
+        <Caret Line="235" Column="38" TopLine="219"/>
+      </Position8>
+      <Position9>
+        <Filename Value="main.pas"/>
+        <Caret Line="234" Column="38" TopLine="218"/>
+      </Position9>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
