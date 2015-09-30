@@ -1,7 +1,7 @@
 object mainForm: TmainForm
-  Left = 1127
+  Left = 1141
   Height = 310
-  Top = 167
+  Top = 130
   Width = 200
   ActiveControl = Edit
   Caption = 'Calculator v0.0'
@@ -19,6 +19,7 @@ object mainForm: TmainForm
   KeyPreview = True
   Menu = MainMenu
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   ParentBiDiMode = False
   LCLVersion = '1.4.2.0'

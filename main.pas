@@ -5,7 +5,7 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, about, Menus;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, about, Menus, ActnList, LCLtype;
 
 type
 
@@ -54,6 +54,7 @@ type
     procedure EditChange(Sender: TObject);
     procedure equalClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure actionClick(Sender: TObject);
     procedure MCClick(Sender: TObject);
@@ -127,7 +128,7 @@ end;
 
 procedure TmainForm.FormKeyPress(Sender: TObject; var Key: char);
 var
-  symbols: Set of Char = ['0'..'9', '+', '-', '*', '/', '=', #08, #13];
+  symbols: Set of Char = ['0'..'9', '+', '-', '*', '/', '=', '%', #08, #13, #27];
 begin
   if not (Key in symbols) then
      Key:= #0;
@@ -136,10 +137,21 @@ begin
      '-': minus.Click();
      '*': multiply.Click();
      '/': divide.Click();
+     '%': modulo.Click();
      '=', #13: equal.Click();
      #08: backspace.Click();
+     #27: C.Click();
      else changeEdit(Key);
   end;
+end;
+
+procedure TmainForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  Edit.SelectAll;
+  if (Key = VK_F9) then changeSign.Click();
+  if (Key = 67) and (Shift = [ssCtrl]) then Edit.CopyToClipboard;
+  //if (Key = 86) and (Shift = [ssCtrl]) then Edit.PasteFromClipboard; PASTE Ctrl+V
 end;
 
 function TmainForm.isDotExist(): Boolean;
@@ -164,19 +176,14 @@ var
   i:integer;
 begin
   if (Length(Edit.Text) > 1) and (Edit.Text[1] = '0') and not(isDotExist) then
-        Edit.Text:= copy(Edit.Text, 2, Length(Edit.Text))
-  else if (Edit.Text = '') or (Edit.Text = '-') then
-     Edit.Text:= '0';
+     Edit.Text:= copy(Edit.Text, 2, Length(Edit.Text))
+  else if (Edit.Text = '') or (Edit.Text = '-') then Edit.Text:= '0';
   lengthNumber:= 0;
   for i:=1 to Length(Edit.Text) do
-      if (Edit.Text[i] in ['0'..'9']) then
-         inc(lengthNumber);
-  if (lengthNumber = MAX_LENGTH_OF_NUMBER) then
-     Edit.Enabled:= False
-  else if (lengthNumber > MAX_LENGTH_OF_NUMBER) then
-     Edit.Text:= copy(Edit.Text, 1, Length(Edit.Text)-1)
-  else
-     Edit.Enabled:= True;
+      if (Edit.Text[i] in ['0'..'9']) then inc(lengthNumber);
+  if (lengthNumber = MAX_LENGTH_OF_NUMBER) then Edit.Enabled:= False
+  else if (lengthNumber > MAX_LENGTH_OF_NUMBER) then Edit.Text:= copy(Edit.Text, 1, Length(Edit.Text)-1)
+  else Edit.Enabled:= True;
 end;
 { end }
 { Вычислительные операции begin }
@@ -308,7 +315,7 @@ end;
 {Служебные функции begin }
 procedure TmainForm.backspaceClick(Sender: TObject);
 begin
-  if (Length(Edit.Text) <> 0) and (state <> Error) then
+  if (Length(Edit.Text) <> 0) and (state <> Error) and not(changeValue) then
       Edit.Text:= copy(Edit.Text, 1, Length(Edit.Text)-1);
 end;
 
