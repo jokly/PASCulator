@@ -67,6 +67,7 @@ object mainForm: TmainForm
     Alignment = taRightJustify
     ParentBidiMode = False
     OnChange = EditChange
+    ReadOnly = True
     TabOrder = 4
     Text = '0'
   end

@@ -367,8 +367,8 @@ begin
     buffer.Text:= '';
     answer:= 0;
     state:= Initial;
-    changeValue:= true;
   end;
+  changeValue:= true;
 end;
 { end }
 
