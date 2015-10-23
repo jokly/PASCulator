@@ -5,7 +5,8 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, about, Menus, ActnList, LCLtype;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, about, Menus, ActnList, LCLtype;
 
 type
 
@@ -72,20 +73,23 @@ type
   public
     { public declarations }
   end;
+
+  var
+    mainForm: TmainForm;
+
+implementation
+
 const
   MAX_LENGTH_OF_NUMBER = 16;
   ERROR_MESSAGE = 'Ошибка';
 type
   States = (Initial, ActionButton, FunctionButton, EqualOperation, Error);
 var
-  mainForm: TmainForm;
   state:States;
   lengthNumber, startFunc:Integer;
   answer, memory, lastNumber, equalAns, lastFuncAns: Extended;
   operation: Char;
   changeValue: Boolean;
-
-implementation
 
 {$R *.lfm}
 
@@ -99,6 +103,7 @@ begin
   state:= Initial;
   changeValue:= false;
   memory:= 0;
+  Edit.MaxLength:= MAX_LENGTH_OF_NUMBER;
 end;
 { end }
 { Ввод begin }
@@ -182,7 +187,6 @@ begin
   for i:=1 to Length(Edit.Text) do
       if (Edit.Text[i] in ['0'..'9']) then inc(lengthNumber);
   if (lengthNumber = MAX_LENGTH_OF_NUMBER) then Edit.Enabled:= False
-  else if (lengthNumber > MAX_LENGTH_OF_NUMBER) then Edit.Text:= copy(Edit.Text, 1, Length(Edit.Text)-1)
   else Edit.Enabled:= True;
 end;
 { end }

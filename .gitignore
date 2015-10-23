@@ -1,2 +1,6 @@
 backup/*
 *.exe
+*.txt
+lib/*
+*.res
+*.lps
